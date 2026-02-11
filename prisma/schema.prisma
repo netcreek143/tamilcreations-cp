@@ -1,0 +1,150 @@
+// Prisma schema for Tamil Creations E-commerce Platform
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// User model for customers and admins
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      Role     @default(CUSTOMER)
+  phone     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  orders    Order[]
+  wishlist  Wishlist[]
+  addresses Address[]
+}
+
+enum Role {
+  CUSTOMER
+  ADMIN
+}
+
+// Address model for shipping
+model Address {
+  id          String  @id @default(cuid())
+  userId      String
+  fullName    String
+  phone       String
+  addressLine String
+  city        String
+  state       String
+  pincode     String
+  isDefault   Boolean @default(false)
+
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orders Order[]
+}
+
+// Category model for product organization
+model Category {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  slug        String    @unique
+  description String?
+  image       String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  products Product[]
+}
+
+// Product model
+model Product {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  price       Float
+  images      String // JSON array of image URLs
+  categoryId  String
+  stock       Int      @default(0)
+  variants    String? // JSON array of variant options (sizes, colors)
+  featured    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  category   Category     @relation(fields: [categoryId], references: [id])
+  orderItems OrderItem[]
+  wishlists  Wishlist[]
+}
+
+// Order model
+model Order {
+  id              String      @id @default(cuid())
+  userId          String
+  addressId       String
+  items           String // JSON array of cart items
+  subtotal        Float
+  shipping        Float       @default(0)
+  total           Float
+  status          OrderStatus @default(PENDING)
+  paymentId       String?
+  paymentStatus   String?
+  razorpayOrderId String?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  user       User        @relation(fields: [userId], references: [id])
+  address    Address     @relation(fields: [addressId], references: [id])
+  orderItems OrderItem[]
+}
+
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  REFUNDED
+}
+
+// OrderItem model for detailed order tracking
+model OrderItem {
+  id        String   @id @default(cuid())
+  orderId   String
+  productId String
+  quantity  Int
+  price     Float
+  variant   String? // Selected variant (size/color)
+  createdAt DateTime @default(now())
+
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id])
+}
+
+// Wishlist model
+model Wishlist {
+  id        String   @id @default(cuid())
+  userId    String
+  productId String
+  createdAt DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId])
+}
+
+// Hero Slide model for homepage carousel
+model HeroSlide {
+  id        String   @id @default(cuid())
+  title     String
+  subtitle  String?
+  image     String
+  ctaText   String   @default("Shop Collection")
+  ctaLink   String   @default("/shop")
+  order     Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
