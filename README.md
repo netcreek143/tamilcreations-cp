@@ -101,36 +101,39 @@ A modern, responsive e-commerce platform for Chennai's premier fashion store spe
 
 ## 📁 Project Structure
 
-```
-slooze-frontend/
+tamilcreations-ecommerce/
 ├── app/                          # Next.js App Router pages
+│   ├── (admin)/                  # Admin panel routes
+│   ├── (shop)/                   # Customer facing shop routes
+│   │   ├── login/                # Login page
+│   │   ├── register/             # Registration page
+│   │   ├── shop/                 # Product catalog
+│   │   └── page.tsx              # Home page
 │   ├── api/                      # API routes
+│   │   ├── admin/                # Admin API endpoints
 │   │   ├── auth/                 # Authentication endpoints
 │   │   ├── products/             # Product endpoints
 │   │   └── categories/           # Category endpoints
-│   ├── login/                    # Login page
-│   ├── register/                 # Registration page
-│   ├── shop/                     # Product catalog
-│   ├── products/[id]/            # Product detail pages
 │   ├── layout.tsx                # Root layout
-│   ├── page.tsx                  # Home page
-│   └── globals.css              # Global styling
+│   └── globals.css               # Global styling
 ├── components/
 │   └── layout/                   # Layout components
 │       ├── Header.tsx
-│       └── Footer.tsx
+│       ├── Footer.tsx
+│       └── BottomNav.tsx
 ├── lib/                          # Utility functions
 │   ├── auth.ts                   # NextAuth configuration
+│   ├── cart-context.tsx          # Cart state management
 │   ├── prisma.ts                 # Prisma client
 │   ├── utils.ts                  # Helper functions
-│   └── validations.ts            # Zod schemas
+│   ├── validations.ts            # Zod schemas
+│   └── wishlist-context.tsx      # Wishlist state management
 ├── prisma/
 │   ├── schema.prisma             # Database schema
 │   └── seed.ts                   # Database seeding
 ├── public/
 │   └── images/                   # Static images
 └── types/                        # TypeScript types
-```
 
 ## 🎨 Design Features
 
