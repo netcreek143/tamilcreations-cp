@@ -1,4 +1,4 @@
-# Deployment Guide for Sai Agalyas E-commerce
+# Deployment Guide for Tamil Creations E-commerce
 
 This guide will help you deploy your application to **Vercel** (Free Hosting) and **Neon.tech** (Free PostgreSQL Database).
 
@@ -75,7 +75,7 @@ Once deployed, the database is empty. You need to push your schema to it.
 
 ## Step 5: Finalize Configuration
 
-1.  Once deployment is successful, Vercel will give you a domain (e.g., `sai-agalyas.vercel.app`).
+1.  Once deployment is successful, Vercel will give you a domain (e.g., `tamil-creations.vercel.app`).
 2.  Go to Vercel Settings > Environment Variables.
-3.  Update `NEXTAUTH_URL` to `https://sai-agalyas.vercel.app`.
+3.  Update `NEXTAUTH_URL` to `https://tamil-creations.vercel.app`.
 4.  Redeploy (or go to Deployments > ... > Redeploy) for the changes to take effect.

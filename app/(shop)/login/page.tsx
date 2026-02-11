@@ -133,7 +133,7 @@ export default function LoginPage() {
                     <div className="mt-4 text-center">
                         <p className="text-sm text-gray-500">
                             Demo credentials:<br />
-                            Admin: admin@saiagalyas.com / admin123<br />
+                            Admin: admin@tamilcreations.com / admin123<br />
                             Customer: customer@example.com / customer123
                         </p>
                     </div>

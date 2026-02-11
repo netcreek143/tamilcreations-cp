@@ -60,7 +60,7 @@ A modern, responsive e-commerce platform for Chennai's premier fashion store spe
    ```
    DATABASE_URL="file:./dev.db"
    NEXTAUTH_URL="http://localhost:3000"
-   NEXTAUTH_SECRET="sai-agalyas-arts-fashion-secret-key-2026"
+   NEXTAUTH_SECRET="tamil-creations-secret-key-2026"
    ```
 
 4. **Initialize the database**
@@ -92,7 +92,7 @@ A modern, responsive e-commerce platform for Chennai's premier fashion store spe
 ## 🔐 Login Credentials
 
 **Admin Access:**
-- Email: `admin@saiagalyas.com`
+- Email: `admin@tamilcreations.com`
 - Password: `admin123`
 
 **Customer Access:**
@@ -200,15 +200,15 @@ npm run lint         # Run ESLint
 
 ## 🤝 Contributing
 
-This is a private project for Sai Agalyas Arts & Fashion.
+This is a private project for Tamil Creations.
 
 ## 📄 License
 
-All rights reserved © 2026 Sai Agalyas Arts & Fashion
+All rights reserved © 2026 Tamil Creations
 
 ## 📞 Support
 
-For issues or questions, contact: info@saiagalyas.com
+For issues or questions, contact: info@tamilcreations.com
 
 ---
 
