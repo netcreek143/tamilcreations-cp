@@ -33,12 +33,46 @@ export default function HeroSlideForm({ initialData, isEdit = false }: HeroSlide
         isActive: initialData?.isActive ?? true,
     });
 
+    const [uploading, setUploading] = useState(false);
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value, type } = e.target;
         setFormData(prev => ({
             ...prev,
             [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value
         }));
+    };
+
+    const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        if (file.size > 4 * 1024 * 1024) {
+            alert('File size too large. Max 4MB.');
+            return;
+        }
+
+        setUploading(true);
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+            const res = await fetch('/api/upload', {
+                method: 'POST',
+                body: formData,
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) throw new Error(data.error || 'Upload failed');
+
+            setFormData(prev => ({ ...prev, image: data.url }));
+        } catch (error) {
+            console.error('Error uploading file:', error);
+            alert('Failed to upload image');
+        } finally {
+            setUploading(false);
+        }
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -154,7 +188,30 @@ export default function HeroSlideForm({ initialData, isEdit = false }: HeroSlide
                                 placeholder="Image URL (e.g. from Unsplash)"
                                 className="w-full px-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent outline-none text-sm mb-2"
                             />
-                            <p className="text-xs text-slate-500">Enter a direct image URL.</p>
+
+                            <div className="relative">
+                                <input
+                                    type="file"
+                                    id="file-upload"
+                                    className="hidden"
+                                    accept="image/*"
+                                    onChange={handleFileUpload}
+                                    disabled={uploading}
+                                />
+                                <label
+                                    htmlFor="file-upload"
+                                    className={`w-full flex items-center justify-center gap-2 px-4 py-2 border-2 border-dashed border-slate-300 rounded-lg text-sm font-medium text-slate-600 hover:border-[#D4AF37] hover:text-[#D4AF37] cursor-pointer transition-all ${uploading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                >
+                                    {uploading ? (
+                                        <Loader2 className="w-4 h-4 animate-spin" />
+                                    ) : (
+                                        <Upload className="w-4 h-4" />
+                                    )}
+                                    {uploading ? 'Uploading...' : 'Upload Local Image'}
+                                </label>
+                            </div>
+
+                            <p className="text-xs text-slate-500 mt-2">Enter a URL or upload a local image (max 4MB).</p>
                         </div>
 
                         <div className="aspect-video bg-slate-50 rounded-lg border-2 border-dashed border-slate-200 flex items-center justify-center overflow-hidden relative">

@@ -13,7 +13,10 @@ import {
     TrendingUp,
     IndianRupee,
     List,
+    LogOut,
+    Image as ImageIcon,
 } from 'lucide-react';
+import { signOut } from 'next-auth/react';
 
 export default function AdminDashboard() {
     const { data: session, status } = useSession();
@@ -68,13 +71,20 @@ export default function AdminDashboard() {
 
     return (
         <div className="min-h-screen bg-muted py-8">
-            <div className="container mx-auto px-4">
+            <div className="w-full px-6">
                 <div className="flex items-center justify-between mb-8">
                     <h1 className="text-4xl font-bold">Admin Dashboard</h1>
                     <Link href="/" className="flex items-center text-gray-600 hover:text-primary">
                         <ArrowLeft className="w-5 h-5 mr-2" />
                         Back to Store
                     </Link>
+                    <button
+                        onClick={() => signOut({ callbackUrl: '/' })}
+                        className="flex items-center text-red-600 hover:text-red-700 ml-4"
+                    >
+                        <LogOut className="w-5 h-5 mr-2" />
+                        Logout
+                    </button>
                 </div>
 
                 {/* Stats Grid */}
@@ -187,6 +197,21 @@ export default function AdminDashboard() {
                             <div>
                                 <h3 className="text-lg font-bold text-gray-900 mb-1">Manage Customers</h3>
                                 <p className="text-sm text-gray-500">View customer information</p>
+                            </div>
+                        </div>
+                    </Link>
+
+                    <Link
+                        href="/admin/hero"
+                        className="bg-white rounded-xl shadow-sm p-6 hover:shadow-md transition-all duration-300 border border-gray-100 group"
+                    >
+                        <div className="flex items-center gap-6">
+                            <div className="p-4 bg-primary/5 rounded-xl group-hover:bg-primary/10 transition-colors">
+                                <ImageIcon className="w-8 h-8 text-primary" />
+                            </div>
+                            <div>
+                                <h3 className="text-lg font-bold text-gray-900 mb-1">Manage Slider</h3>
+                                <p className="text-sm text-gray-500">Edit homepage hero slides</p>
                             </div>
                         </div>
                     </Link>

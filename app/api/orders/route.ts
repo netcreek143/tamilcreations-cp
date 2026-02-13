@@ -42,6 +42,8 @@ export async function POST(request: NextRequest) {
                     shipping,
                     total,
                     status: 'PENDING',
+                    razorpayOrderId: body.razorpayOrderId || null,
+                    paymentStatus: 'PENDING',
                 },
             });
 

@@ -85,12 +85,12 @@ export default function AnimatedHomePage({ categories, featuredProducts, heroSli
                                     </div>
 
                                     {/* Content */}
-                                    <div className="relative z-10 h-full container mx-auto px-6 flex flex-col items-center justify-center text-center">
+                                    <div className="relative z-10 h-full container mx-auto px-4 sm:px-6 flex flex-col items-center justify-center text-center">
                                         <motion.h1
                                             initial={{ y: 30, opacity: 0 }}
                                             animate={{ y: 0, opacity: 1 }}
                                             transition={{ delay: 0.3, duration: 0.5 }}
-                                            className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-300 font-playfair tracking-tight leading-tight drop-shadow-2xl"
+                                            className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold mb-4 sm:mb-6 text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-300 font-playfair tracking-tight leading-tight drop-shadow-2xl"
                                         >
                                             {slide.title}
                                         </motion.h1>
@@ -99,7 +99,7 @@ export default function AnimatedHomePage({ categories, featuredProducts, heroSli
                                                 initial={{ y: 30, opacity: 0 }}
                                                 animate={{ y: 0, opacity: 1 }}
                                                 transition={{ delay: 0.5, duration: 0.5 }}
-                                                className="text-slate-200 text-lg md:text-2xl mb-12 max-w-2xl mx-auto font-light leading-relaxed tracking-wide"
+                                                className="text-slate-200 text-base sm:text-lg md:text-2xl mb-8 sm:mb-12 max-w-xl md:max-w-2xl mx-auto font-light leading-relaxed tracking-wide"
                                             >
                                                 {slide.subtitle}
                                             </motion.p>
@@ -109,7 +109,7 @@ export default function AnimatedHomePage({ categories, featuredProducts, heroSli
                                             animate={{ y: 0, opacity: 1 }}
                                             transition={{ delay: 0.7, duration: 0.5 }}
                                         >
-                                            <Link href={slide.ctaLink} className="group relative overflow-hidden bg-white text-[#0F172A] px-10 py-4 rounded-full font-bold uppercase tracking-widest text-sm shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(212,175,55,0.6)] transition-all duration-300 transform hover:-translate-y-1 inline-block">
+                                            <Link href={slide.ctaLink} className="group relative overflow-hidden bg-white text-[#0F172A] px-12 py-4 sm:px-14 sm:py-5 rounded-full font-bold uppercase tracking-widest text-sm sm:text-base shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(212,175,55,0.6)] transition-all duration-300 transform hover:-translate-y-1 inline-block">
                                                 <span className="relative z-10 group-hover:text-[#D4AF37] transition-colors">{slide.ctaText}</span>
                                                 <div className="absolute inset-0 bg-[#0F172A] transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
                                             </Link>
@@ -150,7 +150,7 @@ export default function AnimatedHomePage({ categories, featuredProducts, heroSli
                                         variants={fadeInUp}
                                         className="flex flex-col sm:flex-row gap-6 justify-center"
                                     >
-                                        <Link href="/shop" className="group relative overflow-hidden bg-white text-[#0F172A] px-10 py-4 rounded-full font-bold uppercase tracking-widest text-sm shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(212,175,55,0.6)] transition-all duration-300 transform hover:-translate-y-1">
+                                        <Link href="/shop" className="group relative overflow-hidden bg-white text-[#0F172A] px-12 py-4 sm:px-14 sm:py-5 rounded-full font-bold uppercase tracking-widest text-sm sm:text-base shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(212,175,55,0.6)] transition-all duration-300 transform hover:-translate-y-1">
                                             <span className="relative z-10 group-hover:text-[#D4AF37] transition-colors">Shop Collection</span>
                                             <div className="absolute inset-0 bg-[#0F172A] transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
                                         </Link>
@@ -219,7 +219,7 @@ export default function AnimatedHomePage({ categories, featuredProducts, heroSli
                         <motion.div variants={fadeInUp} className="w-24 h-1 bg-[#D4AF37] mx-auto rounded-full"></motion.div>
                     </motion.div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                         {displayCategories.map((cat: any, index: number) => (
                             <motion.div
                                 key={cat.id}
@@ -228,7 +228,7 @@ export default function AnimatedHomePage({ categories, featuredProducts, heroSli
                                 viewport={{ once: true }}
                                 transition={{ delay: index * 0.1, duration: 0.5 }}
                             >
-                                <Link href={`/shop?category=${cat.slug}`} className="group relative h-[450px] block overflow-hidden rounded-xl bg-white shadow-md hover:shadow-2xl transition-all duration-500">
+                                <Link href={`/shop?category=${cat.slug}`} className="group relative h-[450px] block overflow-hidden rounded-3xl bg-white shadow-md hover:shadow-2xl transition-all duration-500">
                                     <div className="absolute inset-0 bg-slate-200">
                                         {cat.image ? (
                                             <Image src={cat.image} alt={cat.name} fill className="object-cover transition-transform duration-1000 group-hover:scale-110" />
@@ -263,10 +263,10 @@ export default function AnimatedHomePage({ categories, featuredProducts, heroSli
                         className="text-center mb-20"
                     >
                         <motion.h2 variants={fadeInUp} className="text-4xl md:text-5xl font-playfair font-bold text-[#0F172A] mb-4">Featured Masterpieces</motion.h2>
-                        <motion.p variants={fadeInUp} className="text-slate-500 max-w-2xl mx-auto">Exquisite designs selected for the discerning eye.</motion.p>
+                        <motion.p variants={fadeInUp} className="text-slate-500 mx-auto text-center">Exquisite designs selected for the discerning eye.</motion.p>
                     </motion.div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-10">
                         {featuredProducts.length > 0 ? featuredProducts.map((product: any, index: number) => {
                             const images = JSON.parse(product.images);
                             const firstImage = images[0] || '/images/placeholder-product.jpg';
@@ -279,12 +279,12 @@ export default function AnimatedHomePage({ categories, featuredProducts, heroSli
                                     transition={{ delay: index * 0.1, duration: 0.6 }}
                                 >
                                     <Link href={`/products/${product.id}`} className="group block">
-                                        <div className="relative aspect-[3/4] overflow-hidden rounded-xl bg-slate-100 mb-6 shadow-sm group-hover:shadow-xl transition-all duration-500">
+                                        <div className="relative aspect-[3/4] overflow-hidden rounded-3xl bg-slate-100 mb-6 shadow-sm group-hover:shadow-xl transition-all duration-500">
                                             <Image src={firstImage} alt={product.title} fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
 
                                             {/* Quick Action Overlay */}
                                             <div className="absolute inset-x-0 bottom-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                                                <button className="w-full bg-white text-[#0F172A] py-3 rounded-lg font-bold uppercase tracking-wider text-xs shadow-lg hover:bg-[#D4AF37] hover:text-[#0F172A] transition-colors">
+                                                <button className="w-full bg-white text-[#0F172A] py-3 rounded-xl font-bold uppercase tracking-wider text-xs shadow-lg hover:bg-[#D4AF37] hover:text-[#0F172A] transition-colors">
                                                     View Details
                                                 </button>
                                             </div>
@@ -347,7 +347,7 @@ export default function AnimatedHomePage({ categories, featuredProducts, heroSli
                         viewport={{ once: true }}
                         transition={{ delay: 0.4 }}
                     >
-                        <Link href="/contact" className="inline-block bg-[#D4AF37] text-[#0F172A] px-12 py-5 rounded-full font-bold uppercase tracking-widest hover:bg-white transition-all shadow-2xl transform hover:scale-105">
+                        <Link href="/contact" className="inline-block bg-[#D4AF37] text-[#0F172A] px-10 py-4 rounded-full font-bold uppercase tracking-widest text-sm hover:bg-white transition-all shadow-2xl transform hover:scale-105">
                             Start Custom Journey
                         </Link>
                     </motion.div>

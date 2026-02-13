@@ -5,6 +5,7 @@ import { SessionProvider } from 'next-auth/react';
 import BottomNav from '@/components/layout/BottomNav';
 import { CartProvider } from '@/lib/cart-context';
 import { WishlistProvider } from '@/lib/wishlist-context';
+import { Toaster } from 'sonner';
 
 const lato = Lato({
   subsets: ['latin'],
@@ -32,12 +33,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${lato.variable} ${playfair.variable}`}>
-      <body className="min-h-screen flex flex-col bg-background text-foreground pb-20">
+      <body className="min-h-screen flex flex-col bg-background text-foreground">
         <SessionProvider>
           <CartProvider>
             <WishlistProvider>
               {children}
               <BottomNav />
+              <Toaster position="top-center" richColors />
             </WishlistProvider>
           </CartProvider>
         </SessionProvider>

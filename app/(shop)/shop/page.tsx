@@ -147,7 +147,7 @@ function ShopContent() {
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="text-4xl md:text-5xl font-playfair font-bold mb-4"
+                        className="text-3xl md:text-5xl font-playfair font-bold mb-4"
                     >
                         Shop Collection
                     </motion.h1>
@@ -155,7 +155,7 @@ function ShopContent() {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="text-slate-300 text-lg max-w-2xl mx-auto font-light"
+                        className="text-slate-300 text-lg max-w-7xl mx-auto font-light text-center"
                     >
                         Discover our range of handcrafted sarees and bespoke accessories.
                     </motion.p>
@@ -165,17 +165,16 @@ function ShopContent() {
             <div className="container mx-auto px-4 pb-16">
                 {/* Filter Bar */}
                 <div className="bg-white rounded-lg shadow-sm border border-slate-100 p-4 mb-8 sticky top-20 z-30">
-                    <div className="flex flex-col lg:flex-row gap-4 justify-between items-center">
-
+                    <div className="flex flex-col lg:flex-row gap-4 justify-between items-stretch lg:items-center">
                         {/* Search */}
-                        <div className="w-full lg:w-1/3 relative">
+                        <div className="w-full  lg:w-1/3 relative ">
                             <form onSubmit={handleSearch}>
                                 <input
                                     type="text"
                                     placeholder="Search products..."
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
-                                    className="w-full pl-10 pr-4 py-2.5 border border-slate-200 rounded focus:ring-1 focus:ring-[#D4AF37] focus:border-[#D4AF37] outline-none transition-all placeholder:text-slate-400 text-sm"
+                                    className="w-full pl-14 pr-4 py-2.5 border border-slate-200 rounded focus:ring-1 focus:ring-[#D4AF37] focus:border-[#D4AF37] outline-none transition-all placeholder:text-slate-400 text-sm"
                                 />
                                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                             </form>
@@ -310,15 +309,17 @@ function ShopContent() {
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        className="text-center py-20 bg-white rounded-lg border border-dashed border-slate-200"
+                        className="flex flex-col items-center justify-center text-center py-20 bg-white rounded-lg border border-dashed border-slate-200"
                     >
-                        <div className="inline-flex items-center justify-center w-16 h-16 bg-slate-50 rounded-full mb-4">
+                        <div className="inline-flex items-center justify-center w-16 h-16 bg-slate-50 rounded-full mb-6">
                             <Search className="w-8 h-8 text-slate-300" />
                         </div>
-                        <h3 className="text-xl font-medium text-[#0F172A] mb-2">No products found</h3>
-                        <p className="text-slate-500 mb-6 max-w-md mx-auto">
+                        <h3 className="text-xl font-medium text-[#0F172A] mb-4">No products found</h3>
+                        <br />
+                        <p className="text-slate-500 mb-8 max-w-md mx-auto text-center">
                             We couldn't find any products matching your filters. Try adjusting your search or category selection.
                         </p>
+                        <br />
                         <button
                             onClick={clearFilters}
                             className="px-6 py-2 border border-slate-300 text-slate-600 rounded hover:border-[#0F172A] hover:text-[#0F172A] transition-colors"
@@ -331,7 +332,7 @@ function ShopContent() {
                         layout
                         className={
                             viewMode === 'grid'
-                                ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8'
+                                ? 'grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-8'
                                 : 'space-y-4 max-w-4xl mx-auto'
                         }
                     >
@@ -351,7 +352,7 @@ function ShopContent() {
                                     >
                                         <Link
                                             href={`/products/${product.id}`}
-                                            className={`group block bg-white hover:shadow-xl transition-all duration-300 rounded overflow-hidden ${viewMode === 'list' ? 'flex gap-6 p-4 border border-transparent hover:border-[#D4AF37]/30' : ''}`}
+                                            className={`group block bg-white hover:shadow-xl transition-all duration-300 rounded-3xl overflow-hidden ${viewMode === 'list' ? 'flex gap-6 p-4 border border-transparent hover:border-[#D4AF37]/30' : ''}`}
                                         >
                                             <div className={`relative overflow-hidden bg-slate-100 ${viewMode === 'list' ? 'w-40 h-40 flex-shrink-0 rounded' : 'aspect-[3/4]'}`}>
                                                 <Image

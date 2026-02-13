@@ -116,7 +116,7 @@ export default function ProductDetailPage() {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                     {/* Image Gallery */}
                     <div>
-                        <div className="relative aspect-square rounded-lg overflow-hidden mb-4">
+                        <div className="relative aspect-square rounded-3xl overflow-hidden mb-4">
                             <Image
                                 src={images[selectedImage] || '/images/placeholder-product.jpg'}
                                 alt={product.title}
@@ -132,7 +132,7 @@ export default function ProductDetailPage() {
                                     <button
                                         key={idx}
                                         onClick={() => setSelectedImage(idx)}
-                                        className={`relative aspect-square rounded overflow-hidden border-2 ${selectedImage === idx ? 'border-primary' : 'border-transparent'
+                                        className={`relative aspect-square rounded-xl overflow-hidden border-2 ${selectedImage === idx ? 'border-primary' : 'border-transparent'
                                             }`}
                                     >
                                         <Image src={img} alt={`${product.title} ${idx + 1}`} fill className="object-cover" />

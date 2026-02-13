@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Store, Search, ShoppingBag, Heart, User } from 'lucide-react';
+import { Home, Store, Search, ShoppingBag, Heart, User, LayoutGrid } from 'lucide-react';
 import { useCart } from '@/lib/cart-context';
 import { useWishlist } from '@/lib/wishlist-context';
 import { useSession } from 'next-auth/react';
@@ -25,6 +25,11 @@ export default function BottomNav() {
             icon: Store,
         },
         {
+            name: 'Categories',
+            href: '/categories',
+            icon: LayoutGrid,
+        },
+        {
             name: 'Wishlist',
             href: '/wishlist',
             icon: Heart,
@@ -43,8 +48,13 @@ export default function BottomNav() {
         },
     ];
 
+    // Hide BottomNav on admin routes
+    if (pathname?.startsWith('/admin')) {
+        return null;
+    }
+
     return (
-        <div className="fixed bottom-4 left-4 right-4 z-50 bg-white/90 backdrop-blur-md border border-slate-200 shadow-2xl rounded-2xl pb-safe">
+        <div className="md:hidden fixed bottom-4 left-4 right-4 z-50 bg-white/90 backdrop-blur-md border border-slate-200 shadow-2xl rounded-2xl pb-safe">
             <div className="flex justify-around items-center h-16">
                 {navItems.map((item) => {
                     const isActive = pathname === item.href;

@@ -25,11 +25,12 @@ export default async function CategoriesPage() {
                 <div className="container mx-auto px-4 text-center">
                     <span className="text-[#D4AF37] text-sm uppercase tracking-[0.3em] font-medium mb-4 block">Collections</span>
                     <h1 className="text-4xl md:text-5xl font-playfair font-bold mb-6">Browse Categories</h1>
-                    <p className="text-slate-300 text-lg max-w-2xl mx-auto font-light leading-relaxed">
+                    <p className="text-slate-300 text-lg mx-auto font-light leading-relaxed text-center">
                         Explore our thoughtfully curated collections, from traditional silk sarees to contemporary accessories.
                     </p>
                 </div>
             </div>
+            <br />
 
             <div className="container mx-auto px-4 py-16">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -37,7 +38,7 @@ export default async function CategoriesPage() {
                         <Link
                             key={category.id}
                             href={`/shop?category=${category.slug}`}
-                            className="group relative h-[400px] overflow-hidden rounded-sm shadow-sm hover:shadow-2xl transition-all duration-500"
+                            className="group relative h-[400px] overflow-hidden rounded-3xl shadow-sm hover:shadow-2xl transition-all duration-500"
                         >
                             {/* Background Image */}
                             <div className="absolute inset-0 bg-slate-200">
@@ -85,6 +86,7 @@ export default async function CategoriesPage() {
                     </div>
                 )}
             </div>
+            <br />
         </div>
     );
 }

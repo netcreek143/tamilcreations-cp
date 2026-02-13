@@ -7,6 +7,7 @@ import { ArrowLeft, ShoppingBag } from 'lucide-react';
 import { useCart } from '@/lib/cart-context';
 import { formatPrice } from '@/lib/utils';
 import Link from 'next/link';
+import { toast } from 'sonner';
 
 export default function CheckoutPage() {
     const router = useRouter();
@@ -37,45 +38,115 @@ export default function CheckoutPage() {
     const shippingCost = totalPrice > 2000 ? 0 : 100;
     const finalTotal = totalPrice + shippingCost;
 
+    const loadRazorpay = () => {
+        return new Promise((resolve) => {
+            const script = document.createElement('script');
+            script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+            script.onload = () => resolve(true);
+            script.onerror = () => resolve(false);
+            document.body.appendChild(script);
+        });
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
 
         try {
-            // Create order
-            const orderData = {
-                items: items.map((item) => ({
-                    productId: item.id,
-                    title: item.title,
-                    price: item.price,
-                    quantity: item.quantity,
-                    variant: item.variant,
-                })),
-                address: formData,
-                subtotal: totalPrice,
-                shipping: shippingCost,
-                total: finalTotal,
-            };
-
-            const res = await fetch('/api/orders', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(orderData),
-            });
-
-            if (!res.ok) {
-                throw new Error('Failed to create order');
+            const res = await loadRazorpay();
+            if (!res) {
+                toast.error('Razorpay SDK failed to load. Are you online?');
+                return;
             }
 
-            const data = await res.json();
+            // 1. Create Order in Razorpay
+            const orderRes = await fetch('/api/razorpay/order', {
+                method: 'POST',
+                body: JSON.stringify({ amount: finalTotal }),
+            });
+            const orderData = await orderRes.json();
 
-            // TODO: Initialize Razorpay payment
-            // For now, redirect to success page
-            clearCart();
-            router.push(`/orders/${data.orderId}`);
+            if (!orderRes.ok) throw new Error('Failed to create Razorpay order');
+
+            const razorpayOrderId = orderData.id;
+
+            // 2. Create Order in Database
+            const dbOrderRes = await fetch('/api/orders', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    items: items.map((item) => ({
+                        productId: item.id,
+                        title: item.title,
+                        price: item.price,
+                        quantity: item.quantity,
+                        variant: item.variant,
+                    })),
+                    address: formData,
+                    subtotal: totalPrice,
+                    shipping: shippingCost,
+                    total: finalTotal,
+                    razorpayOrderId: razorpayOrderId, // Link DB order to Razorpay order
+                }),
+            });
+
+            if (!dbOrderRes.ok) throw new Error('Failed to create local order');
+
+            const dbOrderData = await dbOrderRes.json();
+            const dbOrderId = dbOrderData.orderId;
+
+            // 3. Open Razorpay Checkout
+            const options = {
+                key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, // Ensure this is public env var
+                amount: orderData.amount,
+                currency: orderData.currency,
+                name: 'Tamil Creations',
+                description: 'Order Payment',
+                order_id: razorpayOrderId,
+                handler: async function (response: any) {
+                    // 4. Verify Payment
+                    const verifyRes = await fetch('/api/razorpay/verify', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            razorpay_order_id: response.razorpay_order_id,
+                            razorpay_payment_id: response.razorpay_payment_id,
+                            razorpay_signature: response.razorpay_signature,
+                            db_order_id: dbOrderId,
+                        }),
+                    });
+
+                    const verifyData = await verifyRes.json();
+
+                    if (verifyData.success) {
+                        toast.success('Payment successful! Order placed.');
+                        clearCart();
+                        router.push(`/orders/${dbOrderId}`);
+                    } else {
+                        toast.error('Payment verification failed. Please contact support.');
+                    }
+                },
+                prefill: {
+                    name: formData.fullName,
+                    email: session?.user?.email,
+                    contact: formData.phone,
+                },
+                theme: {
+                    color: '#D4AF37',
+                },
+                modal: {
+                    ondismiss: function () {
+                        toast.info('Payment cancelled. You can retry from your order history.');
+                    }
+                }
+            };
+
+            const paymentObject = new (window as any).Razorpay(options);
+            paymentObject.open();
+
         } catch (error) {
             console.error('Checkout error:', error);
-            alert('Failed to place order. Please try again.');
+            toast.error('Failed to initiate payment. Please try again.');
         } finally {
             setLoading(false);
         }

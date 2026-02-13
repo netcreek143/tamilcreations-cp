@@ -9,7 +9,7 @@ export default function Footer() {
             {/* Decorative Top Border */}
             <div className="h-1 w-full bg-gradient-to-r from-[#0F172A] via-[#D4AF37] to-[#0F172A]"></div>
 
-            <div className="container mx-auto px-4 py-20 relative z-10">
+            <div className="container mx-auto px-4 pt-20 pb-40 relative z-10">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16">
                     {/* Brand Section */}
                     <div className="space-y-6">
